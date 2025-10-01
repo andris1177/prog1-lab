@@ -17,16 +17,16 @@ A program elvárt működését az alábbi példák mutatják:
 
 int main()
 {
-    long double x, sum;
+    long double x, sum = 0.0;
     char y;
 
-    while (scanf("%lf", &x) == 1)
+    while (scanf("%Lf", &x) == 1)
     {
-        printf("%f\n", x);
+        //printf("%f\n", x);
         sum = sum + x;
     }
 
-    printf("%.3f\n", sum);
+    printf("%.3Lf\n", sum);
 
     while (scanf("%c", &y) != EOF)
         printf("%c", y);
