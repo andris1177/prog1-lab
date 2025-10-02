@@ -20,37 +20,43 @@ Az általánosított Kolakoski-sorozat n különböző számjegyet tartalmaz, ú
 
 int main()
 {
-    int numbers[size] = {0}, n, startingnum = 1, lastrunback = 0, j;
+    int numbers[size] = {1, 2, 2};
+    int n = 0;
+    int referenceIndex = 2;
+    int i = 3;
+    int next = 1;
+    int j;
 
-    //scanf("%d", &n);
+    int test[] = {1, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 1};
 
-    numbers[0] = startingnum;
-
-    for (int i = 0; i < size; i++)
+    while (i < size && referenceIndex < i)
     {
-        for (j = 0; j < numbers[lastrunback]; j++)
+        for (j = 0; j < numbers[referenceIndex]; j++)
         {
-            if (numbers[lastrunback] == 1)
-            {
-                numbers[(i+j)+1] = 2;
-            }
-
-            else 
-            {
-                numbers[(i+j)+1] = 1;
-            }
+            numbers[i] = next;
+            i++;
         }
 
-        printf("%d ", j);
-        lastrunback = lastrunback + j;
+        if (next == 1)
+        {
+            next = 2;
+        }
+
+        else
+        {
+            next = 1;
+        }
+
+        referenceIndex ++;
     }
 
-    printf("\n\n\n\n");
-
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < 14; i++)
     {
-        printf("%d ", numbers[i]);
+        printf("%d: %d\n", numbers[i], test[i]);
+        if (numbers[i] != test[i])
+        {
+            printf("failed\n");
+            break;
+        }
     }
-
-    return 0;
 }
