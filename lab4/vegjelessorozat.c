@@ -17,5 +17,6 @@ int main()
     }
 
     printf("%.2f\n", (double)sum/(double)i);
+
     return 0;
 }

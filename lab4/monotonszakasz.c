@@ -18,10 +18,11 @@ int main()
 
     while (scanf("%d", &x) == 1)
     {
-        if  (x == y)
+        if (yset && x == y)
         {
             break;
         }
+
 
         if (!checked && yset)
         {

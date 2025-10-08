@@ -22,14 +22,15 @@ int main()
 
     while (scanf("%Lf", &x) == 1)
     {
-        //printf("%f\n", x);
         sum = sum + x;
     }
 
     printf("%.3Lf\n", sum);
 
     while (scanf("%c", &y) != EOF)
+    {
         printf("%c", y);
+    }
 
     return 0; 
 }

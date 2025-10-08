@@ -24,39 +24,33 @@ int main()
     int n = 0;
     int referenceIndex = 2;
     int i = 3;
-    int next = 1;
-    int j;
+    int next = 3;
 
-    int test[] = {1, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 1};
+    scanf("%d", &n);
 
-    while (i < size && referenceIndex < i)
-    {
-        for (j = 0; j < numbers[referenceIndex]; j++)
+    while (i < size)
+    {   
+        if (next == n+1)
+        {
+            next = 1;
+        }
+
+        for (int j = 0; j < numbers[referenceIndex] && i < size; j++)
         {
             numbers[i] = next;
             i++;
         }
 
-        if (next == 1)
-        {
-            next = 2;
-        }
-
-        else
-        {
-            next = 1;
-        }
-
-        referenceIndex ++;
+        next++;
+        referenceIndex++;
     }
 
-    for (int i = 0; i < 14; i++)
+    for (int i = 0; i < size; i++)
     {
-        printf("%d: %d\n", numbers[i], test[i]);
-        if (numbers[i] != test[i])
-        {
-            printf("failed\n");
-            break;
-        }
+        printf("%d ", numbers[i]);
     }
+
+    printf("\n");
+
+    return 0;
 }
