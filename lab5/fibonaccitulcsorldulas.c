@@ -10,12 +10,34 @@ A túlcsordulás detektálása általános esetben nehéz feladat, hardvertámog
 Megjegyzés: A feladat megoldásához valójában szükségtelen a 100 elemű tömb feltöltése. Két elemű tömb ciklikus indexelésével is benyújthatsz megoldást.
 */ 
 
-#include <stdio.h>
-#include <limits.h>
+#define length 2
 
+#include <stdio.h>
 
 int main()
 {
-    printf("%Lf\n", LLONG_MIN);
+    unsigned long long x, y;
+    unsigned long long numbers[length];
+    int i;
+    int run = 1;
+
+    scanf("%llu %llu", &x, &y);
+    numbers[0] = x;
+    numbers[1] = y;
+
+    for (i = 0; i < 101; i++)
+    {
+        unsigned long long sum = numbers[0] + numbers[1];
+        numbers[1] = numbers[0];
+        numbers[0] = sum;
+
+        if (numbers[0] < numbers[1])
+        {
+            break;
+        }
+    } 
+
+    printf("%d", i);
+
     return 0;
 }
