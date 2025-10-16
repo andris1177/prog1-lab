@@ -20,27 +20,17 @@ int main()
 
     scanf("%llu%llu", &numbers[0], &numbers[1]);
     int i = 0;
+    int run = 1;
 
-    if (numbers[1] >= numbers[0])
+    for (i = 1; i < 101; i++)
     {
-        while (numbers[1] >= numbers[0])
-        {
-            numbers[2] = numbers[1];
-            numbers[1] = numbers[0] + numbers[1];
-            numbers[0] = numbers[2];
-            i++;
-        }
-    }
+        numbers[2] = numbers[1];
+        numbers[1] += numbers[0];
+        numbers[0] = numbers[2];
 
-    else if (numbers[0] > numbers[1]) 
-    {
-        while (numbers[0] >= numbers[1])
+        if (numbers[2] > numbers[1])
         {
-            numbers[2] = numbers[0];
-            numbers[0] = numbers[0] + numbers[1];
-            numbers[1] = numbers[2];
-            i++;
-            printf("%llu, %llu\n", numbers[0], numbers[1]);
+            break;
         }
     }
 
