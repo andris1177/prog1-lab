@@ -24,22 +24,103 @@ int main(void)
 typedef struct time
 {
     int hour;
-    int minute;
+    int min;
     int sec;
 } time;
 
 int time2sec(time t)
 {
-    return ((t.hour * 60) * 60) + (t.minute * 60) + t.sec;
+    return ((t.hour * 60) * 60) + (t.min * 60) + t.sec;
 }
 
 time sec2time(int sec)
 {
     time t;
 
-    if (sec > 0)
-    {
-        t.sec = sec % 60;
-        t.minute = ((sec - t.sec) / 60) % 60;
-    }
+    int day = 24 * 3600;
+
+    sec = (sec % day + day) % day; 
+
+    t.hour = sec / 3600;
+    t.min = (sec % 3600) / 60;
+    t.sec = sec % 60;
+
+    return t;
+}
+
+/*
+Írj timeplus azonosítójú függvényt, mely összead két paraméterként kapott időpontot, és visszaadja az eredményként kapott időpont struktúrát. A legegyszerűbben úgy járhatsz el, hogy mindkét időpontot másodperccé konvertálod, azokat összeadod, majd az eredményt időponttá alakítod vissza. A konverziókhoz a már megírt time2sec és sec2time függvényeket használd, ne kódolj le semmit újra!
+
+Írj timecmp azonosítójú függvényt, mely összehasonlít két időpontot. Az összehasonlítás kövesse a C nyelv összehasonlító függvényeinek hagyományát, vagyis
+
+    timecmp(a,b) > 0, ha a később van, mint b
+    timecmp(a,b) < 0, ha b később van, mint a
+    timecmp(a,b) == 0, ha b és a megegyeznek.
+
+Vedd észre, hogy az összehasonlítás könnyen visszavezethető a time2sec függvény eredményeinek különbségképzésére. Természetesen az összehasonlítás csak azonos napon belül értelmezhető.
+
+A fenti függvények teszteléséhez cseréld le a main-t az alábbira. Az ellenőrzőbe csak a két új függvényt másold be!
+
+#include <stdio.h>
+
+int main()
+{
+    time workout_begins = {23, 15, 0};
+    time workout_duration = {1, 40, 0};
+    time workout_ends = timeplus(workout_begins, workout_duration);
+    if (timecmp(workout_ends, workout_begins) < 0)
+        printf("Hamarabb van vege, mint mikor kezdodik\n");
+    return 0;
+}
+*/
+
+time timeplus(time a, time b)
+{
+    int asec = time2sec(a);
+    int bsec = time2sec(b);
+
+    return sec2time(asec + bsec);
+}
+
+int timecmp(time a, time b)
+{
+    int asec = time2sec(a);
+    int bsec = time2sec(b);
+
+    if (asec > bsec)
+        return 1;
+
+    else if (bsec > asec)
+        return -1;
+
+    return 0;
+}
+
+/*
+Írj timereset azonosítójú függvényt, mely nem ad vissza semmit, viszont a paraméterként kapott időpontot nullázza.
+
+Segítség: Mivel a függvény meg kell, hogy változtassa paraméterét, azt indirekt módon, mutatóval kell átvennie. Mivel a . operátor "erősebb", mint a *, a p mutatóval átvett struktúra mezőit a (*p).hour módon, zárójelezéssel éred el. Ennek alternatív megfogalmazása: p->hour.
+
+A resetelő függvény hívását az alábbi main demonstrálja. Az ellenőrzőbe csak az új függvényt másold be!
+
+int main(void)
+{
+    time workout_begins = {23, 15, 0};
+    timereset(&workout_begins);
+    return 0;
+}
+*/
+
+void timereset(time* t)
+{
+    t->hour = 0;
+    t->min = 0;
+    t->sec = 0;
+}
+
+int main()
+{
+    time workout_begins = {23, 15, 0};
+    timereset(&workout_begins);
+    return 0;
 }
