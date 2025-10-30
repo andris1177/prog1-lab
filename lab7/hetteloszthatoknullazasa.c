@@ -12,3 +12,21 @@ void seven_to_zero(int* list, int length)
         }
     }
 }
+
+#include <stdio.h>
+
+#define length 12
+
+int main()
+{
+    int list[length] = {1, 7, 7, 2, 2, 2, 7, 2, 2, 7, 2, 7};
+
+    seven_to_zero(list, length);
+
+    for (int i = 0; i < length; i++)
+    {
+        printf("%d ", list[i]);
+    }
+
+    printf("\n");
+}

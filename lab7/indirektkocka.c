@@ -22,3 +22,20 @@ void cube(double a, double* S, double* V)
     *S = 6.0 * a * a;
     *V = a * a * a;
 }
+
+#include <stdio.h>
+
+int main()
+{
+    double s, v;
+    double a;
+
+    while (scanf("%lf", &a) == 1)
+    {
+        cube(a, &s, &v);
+
+        printf("%lf: %lf m^2, %lf m^3\n", a, s, v);   
+    }
+
+    return 0;
+}
