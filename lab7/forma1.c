@@ -51,7 +51,9 @@ struct pilot
     int  racing_number;
     char name[4];                      
     qualifying_result qualifying_results[3];
-};        
+};
+
+typedef struct pilot pilot;          
 
 pilot t[2] = {
     { 1, "MSC", { {1, 67.423}, {3, 46.735}, {1, 70.264} } },
