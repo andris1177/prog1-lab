@@ -40,7 +40,7 @@ typedef struct
 typedef struct 
 {
     point position;
-    interval time;
+    time interval;
 } record;
 
 int in_seconds(time t)
@@ -50,10 +50,23 @@ int in_seconds(time t)
 
 double distance(point pa, point pb)
 {
-    return sqrt(((pb.x - pa.x)*(pb.x - pa.x)) + ((pb.y - pa.y)*(pb.y - pa.y));)
+    return sqrt(((pb.x - pa.x)*(pb.x - pa.x)) + ((pb.y - pa.y)*(pb.y - pa.y)));
 }
 
-double average_speed(record r)
+double average_speed(record r[], int size)
 {
-    
+    double averageSpeed;
+    int count;
+    for (int i = 0; i < size; i++)
+    {
+        double time = 0;
+        double length = 0;
+        length += distance(r[i].interval, r[i-1].interval);
+        time += in_seconds(r[i-1].interval);
+        time += in_seconds(r[i].interval);
+
+        averageSpeed += distance / time;
+    }
+
+    return averageSpeed / count;
 }
