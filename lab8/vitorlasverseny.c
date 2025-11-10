@@ -53,20 +53,22 @@ double distance(point pa, point pb)
     return sqrt(((pb.x - pa.x)*(pb.x - pa.x)) + ((pb.y - pa.y)*(pb.y - pa.y)));
 }
 
-double average_speed(record r[], int size)
+double average_speed(record records[], int n)
 {
-    double averageSpeed;
-    int count;
-    for (int i = 0; i < size; i++)
+    double dis = 0.0;
+    double tim = 0;
+    for (int i = 1; i < n; i++)
     {
-        double time = 0;
-        double length = 0;
-        length += distance(r[i].interval, r[i-1].interval);
-        time += in_seconds(r[i-1].interval);
-        time += in_seconds(r[i].interval);
-
-        averageSpeed += distance / time;
+        dis += distance(records[i].position, records[i - 1].position);
+        tim += in_seconds(records[i].interval);
     }
+    return dis / (double)tim;
+}
 
-    return averageSpeed / count;
+int main()
+{
+    record t[3] = {{{42, 455.5}, {20, 1, 0}}, {{272, -48.5}, {0, 4, 37}}, {{272, 3275.5}, {0, 13, 51}}};
+    double speed = average_speed(t, 3);
+    printf("%lf\n", speed);
+    return 0;
 }
