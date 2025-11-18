@@ -51,81 +51,105 @@ typedef struct _listelem {
 
 listelem* merge(listelem* a, listelem* b)
 {
-    int len = 0;
+    listelem* first;
 
-    listelem* list;
-
-    listelem* curra = a;
-    listelem* currb = b;
-    while (curra != NULL)
+    if (a == NULL)
     {
-        while (currb != NULL)
-        {
-           if(curra->data > currb->data || curra->data == currb->data )
-           {
-                list = (listelem *)malloc(sizeof(listelem));
-                list->data = curra->data;
-                list->next = (listelem *)malloc(sizeof(listelem));
-                list->data = currb->data;
-           }
-
-           if(curra->data < currb->data)
-           {
-                list = (listelem *)malloc(sizeof(listelem));
-                list->data = currb->data;
-                list->next = (listelem *)malloc(sizeof(listelem));
-                list->data = curra->data;
-           }
-           currb = currb->next;
-        }
-        curra = curra->next;
-    }
-    
-    return list;
-}
-
-listelem* array_to_list(double arr[], int length)
-{
-    if (length == 0)
-    {
-        return NULL;
+        return b;
     }
 
-    listelem* firs;
-    listelem* curr;
-    listelem* next;
+    else if (b == NULL)
+    {
+        return a;
+    }
 
-    for (int i = 0; i < length; i++)
-    {   
-        if (i == 0)
+    if (a->data > b->data)
+    {
+        first = b;
+        b = b->next;
+    }
+
+    else 
+    {
+        first = a;
+        a = a->next;
+    }
+
+    listelem* curr = first;
+
+    while (a != NULL && b != NULL)
+    {
+        if (a->data > b->data)
         {
-            curr = (listelem *)malloc(sizeof(listelem));
-            firs = curr;
+            curr->next = b;
+            b = b->next;
         }
-        curr->data = arr[i];
-        if (i != length - 1)
+
+        else if (a->data < b->data)
         {
-            next = (listelem *)malloc(sizeof(listelem));
-            curr->next = next;
-            curr = next;
+            curr->next = a;
+            a = a->next;
         }
 
         else 
         {
-            curr->next = NULL;
+            curr->next = b;
+            b = b->next;
         }
+        
+        curr = curr->next;
     }
 
-    return firs;
+    if (a == NULL && b != NULL)
+    {
+        curr->next = b;
+    }
+
+    else if (a != NULL && b == NULL)
+    {
+        curr->next = a;
+    }
+
+    return first;
+}
+
+listelem* array_to_list(double arr[], int length)
+{
+
+    listelem* first = (listelem *)malloc(sizeof(listelem));
+    first->data = arr[0];
+    first->next = NULL;
+    listelem* curr = first;
+   
+
+    for (int i = 1; i < length; i++)
+    {
+        curr->next = (listelem *)malloc(sizeof(listelem));
+        curr = curr->next;
+        curr->data = arr[i];
+        curr->next = NULL;
+    }
+
+    return first;
+}
+
+void list_free(listelem* first)
+{
+    while (first != NULL)
+    {
+        listelem* tmpNext = first->next;
+        free(first);
+        first = tmpNext;
+    }  
 }
 
 int main()
 {
-    double a[] = {1.3, 3.2, 4.6, 7.0};
-    double b[] = {2.7, 2.9, 5.1};
+    double a[] = {8.5, 14.6, 19.8, 20.7, 32.3, 39.4, 43.1, 49.0};
+    double b[] = {1.9, 3.6, 13.0, 14.5, 16.4, 27.8, 28.1, 35.7};
 
-    listelem* listA = array_to_list(a, 4);
-    listelem* listB = array_to_list(b, 3);
+    listelem* listA = array_to_list(a, 8);
+    listelem* listB = array_to_list(b, 8);
 
     listelem* result = merge(listA, listB);
 
@@ -134,4 +158,8 @@ int main()
         printf("%lf ", result->data);
         result = result->next;
     }
+
+    printf("\n");
+
+    list_free(result);
 }
